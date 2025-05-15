@@ -4,7 +4,7 @@ A mobile version of [ProtonDB](https://protondb.com), made for educational purpo
 
 # License
 
-The ProtonDB Mobile Version is an open-source project available under the MIT License. Your feedback and contributions drive improvement.
+The ProtonDB Mobile Version is an open-source project available under the [MIT License](https://github.com/thiagopls1/protondb-mobile/blob/main/LICENSE). Your feedback and contributions drive improvement.
 
 # Acknowledgments
 
