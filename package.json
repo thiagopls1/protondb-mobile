@@ -1,12 +1,26 @@
 {
   "name": "protondb-mobile",
+  "author": "thiagopls1",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thiagopls1/protondb-mobile/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thiagopls1/protondb-mobile.git"
+  },
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
+    "android:localhost": "expo start --android --localhost",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "commit": "cz",
+    "lint:prettier:check": "prettier . --check",
+    "lint:prettier:fix": "prettier . --write",
+    "hooks:prepare": "husky"
   },
   "dependencies": {
     "expo": "~53.0.9",
@@ -15,7 +29,18 @@
     "react-native": "0.79.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.5.3"
   },
-  "private": true
+  "private": true,
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
