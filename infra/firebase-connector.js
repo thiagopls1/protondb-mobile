@@ -11,12 +11,5 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = initializeAuth(app);
-
-const firebaseConnector = {
-  app,
-  auth,
-};
-
-export default firebaseConnector;
+export const app = initializeApp(firebaseConfig);
+export const auth = initializeAuth(app);
