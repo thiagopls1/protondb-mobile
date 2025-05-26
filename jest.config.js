@@ -8,7 +8,6 @@ const jestConfig = {
   moduleDirectories: ['node_modules', '<rootDir>'],
   testTimeout: 60000,
   verbose: true,
-  transform: {},
 };
 
 export default jestConfig;

@@ -13,7 +13,7 @@ const invalidCredentials = {
 
 describe('Model user', () => {
   describe('On authentication', () => {
-    beforeEach(async () => {
+    afterAll(async () => {
       // Will remove user if exists
       await orchestrator.tryRemoveUser(...Object.values(validCredentials));
     });
