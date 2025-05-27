@@ -1,12 +1,12 @@
-import { View, ScrollView, StyleSheet, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, StatusBar } from 'react-native';
 
 export default function Home() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.landingContainer}>
         <Text style={styles.titleCenter}>
-          Bem vindo ao seu lar para relatórios de compatibilidade de jogos para
-          Linux e Steam Deck!
+          Bem vindo ao seu lar para ver relatórios de compatibilidade de jogos
+          para Linux e Steam Deck!
         </Text>
         <View style={styles.reportsContainer}>
           <View>
@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingVertical: 10,
+    // This will avoid container above StatusBar
+    marginTop: StatusBar.currentHeight,
   },
   landingContainer: {
     flex: 0.2,

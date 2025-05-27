@@ -4,21 +4,26 @@ import { StatusBar } from 'expo-status-bar';
 import Login from 'screens/Login.js';
 import HomeNavigation from 'navigation/HomeNavigation';
 import { AuthProvider } from './context/auth/AuthProvider';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import SignUp from 'screens/SignUp';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
-    <AuthProvider>
-      <NavigationContainer>
-        <StatusBar style="auto" />
-        <Stack.Navigator
-          initialRouteName="HomeNavigation"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AuthProvider>
+    <SafeAreaProvider>
+      <StatusBar style="auto" />
+      <AuthProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="HomeNavigation"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthProvider>
+    </SafeAreaProvider>
   );
 }
