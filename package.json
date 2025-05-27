@@ -26,6 +26,7 @@
     "hooks:prepare": "husky"
   },
   "dependencies": {
+    "@babel/plugin-syntax-top-level-await": "^7.14.5",
     "@expo/metro-runtime": "~5.0.4",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-navigation/bottom-tabs": "^7.3.13",
@@ -57,6 +58,16 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
+    },
+    "babel": {
+      "presets": [
+        [
+          "babel-preset-expo",
+          {
+            "unstable_transformImportMeta": true
+          }
+        ]
+      ]
     }
   }
 }
