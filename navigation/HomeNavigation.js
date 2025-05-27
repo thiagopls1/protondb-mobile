@@ -29,6 +29,7 @@ export default function HomeNavigation({ navigation }) {
           const iconName = focused ? routeValue : `${routeValue}-outline`;
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+        headerShown: false,
       })}
     >
       <Tabs.Screen name="Início" component={Home} />
