@@ -27,7 +27,7 @@ export class ServiceError extends Error {
 }
 
 export class BadRequestError extends Error {
-  constructor(message, action, cause) {
+  constructor({ message, action, cause }) {
     super(message || 'Os dados recebidos estão inválidos', {
       cause: cause,
     });
@@ -47,7 +47,7 @@ export class BadRequestError extends Error {
 }
 
 export class UnauthorizedError extends Error {
-  constructor(message, action, cause) {
+  constructor({ message, action, cause }) {
     super(message || 'Usuário não autenticado', {
       cause: cause,
     });
@@ -67,7 +67,7 @@ export class UnauthorizedError extends Error {
 }
 
 export class ConflictError extends Error {
-  constructor(message, action, cause) {
+  constructor({ message, action, cause }) {
     super(message || 'Recurso já existente', {
       cause: cause,
     });

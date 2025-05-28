@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Button,
   Pressable,
+  Alert,
 } from 'react-native';
 import { useState } from 'react';
 import user from 'models/user';
@@ -13,12 +14,29 @@ export default function SignUp({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  function alertSignUpSuccess() {
+    return Alert.alert('Aviso', 'Conta criada com sucesso', [
+      {
+        text: 'OK',
+        onPress: () => navigation.goBack(),
+      },
+    ]);
+  }
+
+  function alertSignUpFailure(error) {
+    return Alert.alert(error.message, error.action, [
+      {
+        text: 'OK',
+      },
+    ]);
+  }
+
   async function handleSignUp() {
-    const createdUser = await user.signUp(email, password);
-    if (!createdUser) {
-      alert('Erro ao criar o usuário!');
-    } else {
-      alert('Usuário criado com sucesso!');
+    try {
+      await user.signUp(email, password);
+      alertSignUpSuccess();
+    } catch (error) {
+      alertSignUpFailure(error);
     }
   }
 
@@ -39,7 +57,7 @@ export default function SignUp({ navigation }) {
         secureTextEntry
       />
       <Button title="Criar Conta" onPress={handleSignUp} />
-      <Pressable onPress={() => navigation.navigate('Login')}>
+      <Pressable onPress={() => navigation.replace('Login')}>
         <Text style={styles.newAccountText}>
           Já possui uma conta? <Text style={styles.linkText}>Fazer login</Text>
         </Text>

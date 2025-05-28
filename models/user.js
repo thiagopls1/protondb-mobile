@@ -8,7 +8,12 @@
  *   - Firebase
  * */
 
-import { ServiceError } from 'infra/errors';
+import {
+  BadRequestError,
+  ConflictError,
+  ServiceError,
+  UnauthorizedError,
+} from 'infra/errors';
 import { auth } from 'infra/firebase-connector';
 import {
   signInWithEmailAndPassword,
@@ -35,41 +40,57 @@ function isCredentialsValid(email, password) {
 }
 
 async function authenticate(email, password) {
-  let user;
   try {
-    user = await signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    const serviceErrorObject = new ServiceError({
-      message: 'Erro ao autenticar o usuário',
+    if (
+      error.message.includes('auth/invalid-email') ||
+      error.message.includes('auth/invalid-credential')
+    ) {
+      throw new UnauthorizedError({
+        message: 'Falha ao fazer login',
+        action: 'Insira um e-mail ou senha válidos',
+        cause: error,
+      });
+    }
+
+    throw new ServiceError({
+      message: 'Ocorreu um erro ao realizar o login',
+      action: 'Contate o suporte para mais detalhes',
       cause: error,
     });
-    // Log error and throw it again
-    // When calling this function, we should wrap into a try...catch
-    console.error(serviceErrorObject);
-  } finally {
-    // Being an error or not, returns user
-    return user;
   }
 }
 
 async function signUp(email, password) {
-  let user;
   try {
     if (!isCredentialsValid(email, password)) {
-      return user;
+      throw new BadRequestError({
+        message: 'Credenciais inválidas!',
+        action:
+          'Insira credenciais válidas. O e-mail deve conter um @, e a senha deve possuir' +
+          'no mínimo 6 caractéres, com números e letras maiúsculas e minúsculas',
+      });
     }
-    user = await createUserWithEmailAndPassword(auth, email, password);
+    await createUserWithEmailAndPassword(auth, email, password);
   } catch (error) {
+    if (error instanceof BadRequestError) {
+      throw error;
+    }
+
+    if (error.message.includes('auth/email-already-in-use')) {
+      throw new ConflictError({
+        message: 'Email já em uso',
+        action: 'Insira um e-mail diferente',
+        cause: error,
+      });
+    }
+
     // Create error and add the cause
-    const serviceErrorObject = new ServiceError({
-      message: 'Erro ao criar o usuário',
+    throw new ServiceError({
+      message: 'Erro ao criar uma conta',
       cause: error,
     });
-    // Log error
-    console.error(serviceErrorObject);
-  } finally {
-    // Being an error or not, returns user
-    return user;
   }
 }
 

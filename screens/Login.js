@@ -5,6 +5,7 @@ import {
   Text,
   StyleSheet,
   Pressable,
+  Alert,
 } from 'react-native';
 import { useState } from 'react';
 import user from 'models/user';
@@ -13,12 +14,29 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  function alertLoginSuccess() {
+    return Alert.alert('Aviso', 'Login feito com sucesso!', [
+      {
+        text: 'OK',
+        onPress: () => navigation.goBack(),
+      },
+    ]);
+  }
+
+  function alertLoginFailure(error) {
+    return Alert.alert(error.message, error.action, [
+      {
+        text: 'OK',
+      },
+    ]);
+  }
+
   async function handleLogin() {
-    const loggedInUser = await user.authenticate(email, password);
-    if (!loggedInUser) {
-      alert('Usuário ou senha inválidos!');
-    } else {
-      alert('Login feito com sucesso');
+    try {
+      await user.authenticate(email, password);
+      alertLoginSuccess();
+    } catch (error) {
+      alertLoginFailure(error);
     }
   }
 
@@ -39,7 +57,7 @@ export default function Login({ navigation }) {
         secureTextEntry
       />
       <Button title="Fazer Login" onPress={handleLogin} />
-      <Pressable onPress={() => navigation.navigate('SignUp')}>
+      <Pressable onPress={() => navigation.replace('SignUp')}>
         <Text style={styles.newAccountText}>
           Não possui uma conta?{' '}
           <Text style={styles.linkText}>Criar uma conta agora</Text>

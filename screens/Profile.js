@@ -1,15 +1,16 @@
 import { useAuth } from 'context/auth/useAuth';
 import { View, Text, StyleSheet, Button, StatusBar } from 'react-native';
+import { signOut, getAuth } from 'firebase/auth';
 
 export default function Profile({ navigation }) {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
   async function handleLogout() {
-    await user.logout();
+    await signOut(getAuth());
     alert('Logout feito com sucesso');
   }
 
-  if (!user) {
+  if (!user || user === null) {
     return (
       <View style={[styles.container, { gap: 30 }]}>
         <Text style={styles.title}>
