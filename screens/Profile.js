@@ -4,6 +4,11 @@ import { View, Text, StyleSheet, Button, StatusBar } from 'react-native';
 export default function Profile({ navigation }) {
   const { user } = useAuth();
 
+  async function handleLogout() {
+    await user.logout();
+    alert('Logout feito com sucesso');
+  }
+
   if (!user) {
     return (
       <View style={[styles.container, { gap: 30 }]}>
@@ -26,7 +31,7 @@ export default function Profile({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Button title="Fazer Logout" onPress={async () => await user.logout()} />
+      <Button title="Fazer Logout" onPress={handleLogout} />
     </View>
   );
 }
