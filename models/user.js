@@ -21,7 +21,7 @@ function isCredentialsValid(email, password) {
   // If needed to add any new policy, add into it's respective array
   const passwordPolicies = [
     /[A-Z]/.test(password),
-    /[A-Z]/.test(password),
+    /[a-z]/.test(password),
     /[0-9]/.test(password),
     password.length >= 6,
   ];
