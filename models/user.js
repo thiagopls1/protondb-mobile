@@ -85,21 +85,6 @@ async function logout() {
   }
 }
 
-// function getAuthInstance() {
-//   let authInstance;
-//   try {
-//     getAuth();
-//   } catch (error) {
-//     const serviceErrorObject = new ServiceError({
-//       message: 'Erro ao adquirir uma instância de autenticação',
-//       cause: error,
-//     });
-//     console.error(serviceErrorObject);
-//   } finally {
-//     return authInstance;
-//   }
-// }
-
 const user = {
   isCredentialsValid,
   authenticate,
