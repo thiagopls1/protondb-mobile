@@ -73,9 +73,9 @@ async function signUp(email, password) {
   }
 }
 
-async function logout(currentAuth) {
+async function logout() {
   try {
-    signOut(currentAuth);
+    signOut(auth);
   } catch (error) {
     const serviceErrorObject = new ServiceError({
       message: 'Erro ao fazer sign-out',

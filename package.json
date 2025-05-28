@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "expo start",
     "dev:android": "expo start --android",
-    "dev:android:localhost": "expo start --android --localhost",
+    "dev:localhost": "expo start --localhost",
     "dev:tunnel": "expo start --tunnel",
     "dev:ios": "expo start --ios",
     "dev:web": "expo start --web",

@@ -1,9 +1,50 @@
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  TextInput,
+  Button,
+  Text,
+  StyleSheet,
+  Pressable,
+} from 'react-native';
+import { useState } from 'react';
+import user from 'models/user';
 
-export default function Login() {
+export default function Login({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function handleLogin() {
+    const loggedInUser = await user.authenticate(email, password);
+    if (!loggedInUser) {
+      alert('Usuário ou senha inválidos!');
+    } else {
+      alert('Login feito com sucesso');
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Página de login</Text>
+      <TextInput
+        value={email}
+        style={styles.input}
+        placeholder="E-mail"
+        keyboardType="email-address"
+        onChangeText={(text) => setEmail(text)}
+      />
+      <TextInput
+        value={password}
+        style={styles.input}
+        placeholder="Senha"
+        onChangeText={(text) => setPassword(text)}
+        secureTextEntry
+      />
+      <Button title="Fazer Login" onPress={handleLogin} />
+      <Pressable onPress={() => navigation.navigate('SignUp')}>
+        <Text style={styles.newAccountText}>
+          Não possui uma conta?{' '}
+          <Text style={styles.linkText}>Criar uma conta agora</Text>
+        </Text>
+      </Pressable>
     </View>
   );
 }
@@ -13,5 +54,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    gap: 10,
+  },
+  linkText: {
+    color: 'darkblue',
+  },
+  newAccountText: {
+    fontSize: 15,
+  },
+  input: {
+    width: 250,
+    height: 50,
+    margin: 12,
+    borderWidth: 1,
+    borderRadius: 4,
+    padding: 10,
+  },
+  actionContainer: {
+    marginVertical: 15,
+    gap: 15,
   },
 });

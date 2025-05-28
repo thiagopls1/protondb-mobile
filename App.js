@@ -1,10 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import Login from 'screens/Login.js';
-import HomeNavigation from 'navigation/HomeNavigation';
 import { AuthProvider } from './context/auth/AuthProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Login from 'screens/Login';
+import HomeNavigation from 'navigation/HomeNavigation';
 import SignUp from 'screens/SignUp';
 
 export default function App() {

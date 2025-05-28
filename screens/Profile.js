@@ -2,7 +2,7 @@ import { useAuth } from 'context/auth/useAuth';
 import { View, Text, StyleSheet, Button, StatusBar } from 'react-native';
 
 export default function Profile({ navigation }) {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
 
   if (!user) {
     return (
@@ -26,7 +26,7 @@ export default function Profile({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>Página de perfil</Text>
+      <Button title="Fazer Logout" onPress={async () => await user.logout()} />
     </View>
   );
 }
