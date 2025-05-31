@@ -1,3 +1,4 @@
+import { BadRequestError } from 'infra/errors';
 import user from 'models/user';
 import orchestrator from 'tests/orchestrator';
 
@@ -37,9 +38,16 @@ describe('Model user', () => {
       let createdUser = await user.signUp(...Object.values(validCredentials));
       expect(createdUser).toBeDefined();
 
-      // Invalid should be undefined
-      createdUser = await user.signUp(...Object.values(invalidCredentials));
+      // Invalid should be undefined and signUp should throw error
+      let hasThrownBadRequestError = false;
+      createdUser = undefined;
+      try {
+        createdUser = await user.signUp(...Object.values(invalidCredentials));
+      } catch (error) {
+        hasThrownBadRequestError = error instanceof BadRequestError;
+      }
       expect(createdUser).not.toBeDefined();
+      expect(hasThrownBadRequestError).toBe(true);
     });
   });
 });
