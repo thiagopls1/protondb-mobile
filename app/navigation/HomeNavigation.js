@@ -10,7 +10,7 @@ const iconsDict = {
   Perfil: 'person',
 };
 
-export default function HomeNavigation({ navigation }) {
+export default function HomeNavigation() {
   const Tabs = createBottomTabNavigator();
 
   return (

@@ -1,5 +1,6 @@
 const { initializeApp } = require('firebase/app');
 const { initializeAuth, browserLocalPersistence } = require('firebase/auth');
+const { getFirestore } = require('firebase/firestore');
 const ReactNativeAsyncStorage = require('@react-native-async-storage/async-storage');
 
 // Using .cjs because metro's lack of support for top-level async-await
@@ -40,6 +41,7 @@ function initializeAuthByEnvironment(app) {
 
 const app = initializeApp(firebaseConfig);
 const auth = initializeAuthByEnvironment(app);
+const db = getFirestore(app);
 
-module.exports = { app, auth };
+module.exports = { app, auth, db };
 

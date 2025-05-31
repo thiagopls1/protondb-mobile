@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import { useState } from 'react';
-import user from 'models/user';
+import auth from 'models/auth';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
@@ -33,7 +33,7 @@ export default function Login({ navigation }) {
 
   async function handleLogin() {
     try {
-      await user.authenticate(email, password);
+      await auth.authenticate(email, password);
       alertLoginSuccess();
     } catch (error) {
       alertLoginFailure(error);

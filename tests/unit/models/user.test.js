@@ -1,5 +1,5 @@
 import { BadRequestError } from 'infra/errors';
-import user from 'models/user';
+import auth from 'models/auth';
 import orchestrator from 'tests/orchestrator';
 
 const validCredentials = {
@@ -21,13 +21,13 @@ describe('Model user', () => {
 
     test('Credentials policies', () => {
       // Valid should not be false
-      let validationResult = user.isCredentialsValid(
+      let validationResult = auth.isCredentialsValid(
         ...Object.values(validCredentials)
       );
       expect(validationResult).toBe(true);
 
       // Invalid should not be true
-      validationResult = user.isCredentialsValid(
+      validationResult = auth.isCredentialsValid(
         ...Object.values(invalidCredentials)
       );
       expect(validationResult).toBe(false);
@@ -35,14 +35,14 @@ describe('Model user', () => {
 
     test('On user registration', async () => {
       // Valid should be defined
-      let createdUser = await user.signUp(...Object.values(validCredentials));
+      let createdUser = await auth.signUp(...Object.values(validCredentials));
       expect(createdUser).toBeDefined();
 
       // Invalid should be undefined and signUp should throw error
       let hasThrownBadRequestError = false;
       createdUser = undefined;
       try {
-        createdUser = await user.signUp(...Object.values(invalidCredentials));
+        createdUser = await auth.signUp(...Object.values(invalidCredentials));
       } catch (error) {
         hasThrownBadRequestError = error instanceof BadRequestError;
       }

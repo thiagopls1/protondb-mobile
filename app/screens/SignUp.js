@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import { useState } from 'react';
-import user from 'models/user';
+import auth from 'models/auth';
 
 export default function SignUp({ navigation }) {
   const [email, setEmail] = useState('');
@@ -33,7 +33,7 @@ export default function SignUp({ navigation }) {
 
   async function handleSignUp() {
     try {
-      await user.signUp(email, password);
+      await auth.signUp(email, password);
       alertSignUpSuccess();
     } catch (error) {
       alertSignUpFailure(error);
