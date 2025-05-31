@@ -15,7 +15,6 @@ const firebaseConfig = {
   measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-
 function initializeAuthByEnvironment(app) {
   // Test Environment
   if (process.env.NODE_ENV === 'test') {
@@ -44,4 +43,3 @@ const auth = initializeAuthByEnvironment(app);
 const db = getFirestore(app);
 
 module.exports = { app, auth, db };
-

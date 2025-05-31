@@ -1,11 +1,40 @@
 import { useAuth } from 'app/context/auth/useAuth';
-import { View, Text, StyleSheet, Button, StatusBar } from 'react-native';
+import {
+  Button,
+  FlatList,
+  StyleSheet,
+  StatusBar,
+  Text,
+  View,
+} from 'react-native';
 import { signOut, getAuth } from 'firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ScrollView } from 'react-native-web';
+import Device from 'app/components/Device';
 
 export default function Profile({ navigation }) {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
+  const devicesMock = [
+    {
+      distro: 'Arch Linux',
+      kernel: '6.14.2-zen1-1-zen',
+      cpu: 'AMD Ryzen 5',
+      gpu: 'NVIDIA GeForce RTX 3060',
+      gpu_driver: 'NVIDIA 570.133.07',
+      ram: '16 GB',
+      type: 'desktop',
+    },
+    {
+      distro: 'Steam OS Holo',
+      kernel: '5.13.0-valve10.1-1-neptune',
+      cpu: 'AMD Custom APU 0405',
+      gpu: 'AMD Custom GPU 0405',
+      gpu_driver: '4.6 Mesa 22.0.0-devel',
+      ram: '15 GB',
+      type: 'steam_deck',
+    },
+  ];
+
   async function handleLogout() {
     await signOut(getAuth());
     alert('Logout feito com sucesso');
@@ -43,7 +72,7 @@ export default function Profile({ navigation }) {
         <View>
           <Text style={styles.textBold}>{user.email}</Text>
           <Text>Reports criados: 0</Text>
-          <Text>Dispositivos: 2</Text>
+          <Text>Dispositivos: {devicesMock.length}</Text>
         </View>
       </View>
       <View style={styles.actionsContainer}>
@@ -53,7 +82,10 @@ export default function Profile({ navigation }) {
       <View style={styles.separator}></View>
       <View style={styles.devicesContainer}>
         <Text style={[styles.title, styles.textBold]}>Dispositivos</Text>
-        <View></View>
+        <FlatList
+          data={devicesMock}
+          renderItem={(item) => <Device data={item.item} />}
+        />
         <Button title="+ Novo dispositivo" />
       </View>
     </View>
@@ -66,7 +98,6 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight,
   },
   profileInfoContainer: {
-    flex: 0.15,
     flexDirection: 'row',
     padding: 25,
     gap: 10,

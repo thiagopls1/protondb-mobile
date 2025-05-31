@@ -10,20 +10,18 @@ import SignUp from 'app/screens/SignUp';
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
-    <SafeAreaProvider>
+    <AuthProvider>
       <StatusBar style="auto" />
-      <AuthProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="HomeNavigation"
-            screenOptions={{ headerShown: false }}
-          >
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </AuthProvider>
-    </SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="HomeNavigation"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
