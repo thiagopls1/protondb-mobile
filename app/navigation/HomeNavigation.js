@@ -1,8 +1,8 @@
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Explore from 'screens/Explore';
-import Home from 'screens/Home';
-import Profile from 'screens/Profile';
+import Explore from 'app/screens/Explore';
+import Home from 'app/screens/Home';
+import Profile from 'app/screens/Profile';
 
 const iconsDict = {
   Início: 'home',

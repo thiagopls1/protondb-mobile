@@ -1,9 +1,9 @@
-import { useAuth } from 'context/auth/useAuth';
+import { useAuth } from 'app/context/auth/useAuth';
 import { View, Text, StyleSheet, Button, StatusBar } from 'react-native';
 import { signOut, getAuth } from 'firebase/auth';
 
 export default function Profile({ navigation }) {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
 
   async function handleLogout() {
     await signOut(getAuth());

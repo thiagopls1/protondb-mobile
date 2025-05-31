@@ -10,7 +10,7 @@
     "url": "https://github.com/thiagopls1/protondb-mobile.git"
   },
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app/index.js",
   "type": "module",
   "scripts": {
     "dev": "expo start",
@@ -19,7 +19,7 @@
     "dev:tunnel": "expo start --tunnel",
     "dev:ios": "expo start --ios",
     "dev:web": "expo start --web",
-    "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest --runInBand",
+    "test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest --runInBand --verbose",
     "test:watch": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest --watchAll --runInBand --verbose",
     "commit": "cz",
     "lint:prettier:check": "prettier . --check",

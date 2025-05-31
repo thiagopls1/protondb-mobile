@@ -72,7 +72,8 @@ async function signUp(email, password) {
           'no mínimo 6 caractéres, com números e letras maiúsculas e minúsculas',
       });
     }
-    await createUserWithEmailAndPassword(auth, email, password);
+    const user = await createUserWithEmailAndPassword(auth, email, password);
+    return user;
   } catch (error) {
     if (error instanceof BadRequestError) {
       throw error;

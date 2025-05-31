@@ -3,9 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { AuthProvider } from './context/auth/AuthProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Login from 'screens/Login';
-import HomeNavigation from 'navigation/HomeNavigation';
-import SignUp from 'screens/SignUp';
+import Login from 'app/screens/Login';
+import HomeNavigation from 'app/navigation/HomeNavigation';
+import SignUp from 'app/screens/SignUp';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
