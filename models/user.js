@@ -8,7 +8,7 @@ import {
   arrayRemove,
 } from 'firebase/firestore';
 import { ForbiddenError, NotFoundError } from 'infra/errors';
-import { auth, db } from 'infra/firebase-connector.cjs';
+import { db } from 'infra/firebase-connector.cjs';
 
 async function get(userUid) {
   try {
@@ -30,7 +30,7 @@ async function create(user) {
     const ref = doc(db, 'users', user.uid);
     // Map keys to avoid object schema modification
     await setDoc(ref, {
-      devices: user.devices,
+      devices: user.devices || [],
       username: user.username,
     });
   } catch (error) {

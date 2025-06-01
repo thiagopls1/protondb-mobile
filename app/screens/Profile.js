@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import {} from 'react-native-web';
 import alert from 'infra/alert';
 
-export default function Profile({ navigation }) {
+export default function Profile({ navigation, route }) {
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
 
@@ -28,12 +28,11 @@ export default function Profile({ navigation }) {
     }
 
     getUserData();
-  }, [user]);
+  }, [user, route]);
 
   function handleNewDevice() {
-    setUserData({
-      ...userData,
-      devices: [...userData.devices, devicesMock[1]],
+    navigation.navigate('DeviceOptions', {
+      type: 'new',
     });
   }
 

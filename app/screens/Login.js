@@ -74,6 +74,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
+  actionContainer: {
+    marginVertical: 15,
+    gap: 15,
+  },
   linkText: {
     color: 'darkblue',
   },
@@ -87,9 +91,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     padding: 10,
-  },
-  actionContainer: {
-    marginVertical: 15,
-    gap: 15,
   },
 });
