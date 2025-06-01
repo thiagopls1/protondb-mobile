@@ -4,7 +4,6 @@ import {
   FlatList,
   StyleSheet,
   StatusBar,
-  ScrollView,
   Text,
   View,
 } from 'react-native';
@@ -14,9 +13,10 @@ import Device from 'app/components/Device';
 import userModel from 'models/user';
 import { useEffect, useState } from 'react';
 import {} from 'react-native-web';
+import alert from 'infra/alert';
 
 export default function Profile({ navigation }) {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -29,27 +29,6 @@ export default function Profile({ navigation }) {
 
     getUserData();
   }, [user]);
-
-  const devicesMock = [
-    {
-      distro: 'Arch Linux',
-      kernel: '6.14.2-zen1-1-zen',
-      cpu: 'AMD Ryzen 5',
-      gpu: 'NVIDIA GeForce RTX 3060',
-      gpu_driver: 'NVIDIA 570.133.07',
-      ram: '16 GB',
-      type: 'desktop',
-    },
-    {
-      distro: 'Steam OS Holo',
-      kernel: '5.13.0-valve10.1-1-neptune',
-      cpu: 'AMD Custom APU 0405',
-      gpu: 'AMD Custom GPU 0405',
-      gpu_driver: '4.6 Mesa 22.0.0-devel',
-      ram: '15 GB',
-      type: 'steam_deck',
-    },
-  ];
 
   function handleNewDevice() {
     setUserData({
@@ -70,7 +49,7 @@ export default function Profile({ navigation }) {
       <View
         style={[
           styles.container,
-          { gap: 30, justifyContent: 'center', alignItems: 'center' },
+          { flex: 1, gap: 30, justifyContent: 'center', alignItems: 'center' },
         ]}
       >
         <Text style={styles.title}>

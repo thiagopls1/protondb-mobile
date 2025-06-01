@@ -2,7 +2,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { AuthProvider } from './context/auth/AuthProvider';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Login from 'app/screens/Login';
 import HomeNavigation from 'app/navigation/HomeNavigation';
 import SignUp from 'app/screens/SignUp';

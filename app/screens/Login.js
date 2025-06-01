@@ -5,17 +5,17 @@ import {
   Text,
   StyleSheet,
   Pressable,
-  Alert,
 } from 'react-native';
 import { useState } from 'react';
 import auth from 'models/auth';
+import alert from 'infra/alert';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   function alertLoginSuccess() {
-    return Alert.alert('Aviso', 'Login feito com sucesso!', [
+    return alert('Aviso', 'Login feito com sucesso!', [
       {
         text: 'OK',
         onPress: () => navigation.goBack(),
@@ -24,7 +24,7 @@ export default function Login({ navigation }) {
   }
 
   function alertLoginFailure(error) {
-    return Alert.alert(error.message, error.action, [
+    return alert(error.message, error.action, [
       {
         text: 'OK',
       },

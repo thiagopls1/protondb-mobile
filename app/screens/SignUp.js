@@ -5,19 +5,18 @@ import {
   StyleSheet,
   Button,
   Pressable,
-  Alert,
 } from 'react-native';
 import { useState } from 'react';
 import auth from 'models/auth';
 import user from 'models/user';
-import { getAuth } from 'firebase/auth';
+import alert from 'infra/alert';
 
 export default function SignUp({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   function alertSignUpSuccess() {
-    return Alert.alert('Aviso', 'Conta criada com sucesso', [
+    return alert('Aviso', 'Conta criada com sucesso', [
       {
         text: 'OK',
         onPress: () => navigation.goBack(),
@@ -26,7 +25,7 @@ export default function SignUp({ navigation }) {
   }
 
   function alertSignUpFailure(error) {
-    return Alert.alert(error.message, error.action, [
+    return alert(error.message, error.action, [
       {
         text: 'OK',
       },
