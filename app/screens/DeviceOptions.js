@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
 const typesDict = {
@@ -18,15 +18,19 @@ const typesDict = {
   new: 'Novo Dispositivo',
 };
 
-export default function ({ navigation, route }) {
+export default function({ navigation, route }) {
   const [device, setDevice] = useState(route.params);
   const [editingDevice, setEditingDevice] = useState(device);
-  const [isEditing, setIsEditing] = useState(device.type === 'new');
+  const [isEditing, setIsEditing] = useState(isDeviceNew());
 
   const deviceTypeOptions = [
     { title: 'Desktop', icon: 'desktop-outline', slug: 'desktop' },
     { title: 'Steam Deck', icon: 'phone-landscape-sharp', slug: 'steam_deck' },
   ];
+
+  function isDeviceNew() {
+    return device.type === 'new';
+  }
 
   function handleEdit() {
     setIsEditing(!isEditing);
@@ -40,17 +44,41 @@ export default function ({ navigation, route }) {
     }
   }
 
-  function Header() {
-    return (
-      <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
-          <Ionicons name="arrow-back-outline" size={35} />
-        </TouchableOpacity>
-        <Text style={styles.title}>
-          {!isEditing ? typesDict[device.type] : typesDict[editingDevice.type]}
-        </Text>
-      </View>
-    );
+  async function handleCreate() {
+    const newDevice = editingDevice;
+    const deviceObj = {
+      distro: newDevice.distro,
+      kernel: newDevice.kernel,
+      cpu: newDevice.cpu,
+      gpu: newDevice.gpu,
+      gpu_driver: newDevice.gpu_driver,
+      ram: newDevice.ram,
+      type: newDevice.type,
+    };
+    await user.createDevice(device.user_uid, deviceObj);
+    setDevice(editingDevice);
+    navigation.goBack();
+  }
+
+  async function handleSave() {
+    const newDevice = editingDevice;
+    const deviceObj = {
+      distro: newDevice.distro,
+      kernel: newDevice.kernel,
+      cpu: newDevice.cpu,
+      gpu: newDevice.gpu,
+      gpu_driver: newDevice.gpu_driver,
+      ram: newDevice.ram,
+      type: newDevice.type,
+    };
+    await user.updateDevice(device.user_uid, deviceObj, device.index);
+    setDevice(editingDevice);
+    setIsEditing(!isEditing);
+  }
+
+  async function handleExclude() {
+    await user.deleteDevice(device.user_uid, device.index);
+    navigation.goBack();
   }
 
   if (isEditing) {
@@ -120,7 +148,7 @@ export default function ({ navigation, route }) {
               setEditingDevice({ ...editingDevice, type: selectedItem.slug })
             }
             renderButton={(selectedItem, isOpened) => {
-              if (editingDevice.type !== 'new') {
+              if (!isDeviceNew()) {
                 const optionIndex = deviceTypeOptions.findIndex(
                   (obj) => obj.slug == editingDevice.type
                 );
@@ -160,7 +188,11 @@ export default function ({ navigation, route }) {
         </View>
         <View style={styles.actionsContainer}>
           <View style={{ flex: 1 }}>
-            <Button title="Salvar" />
+            {!isDeviceNew() ? (
+              <Button title="Salvar" onPress={handleSave} />
+            ) : (
+              <Button title="Criar" onPress={handleCreate} />
+            )}
           </View>
           <View style={{ flex: 1 }}>
             <Button title="Descartar" onPress={handleDiscard} />
@@ -188,7 +220,7 @@ export default function ({ navigation, route }) {
       </View>
       <View style={styles.actionsContainer}>
         <View style={{ flex: 1 }}>
-          <Button title="Excluir" />
+          <Button title="Excluir" onPress={handleExclude} />
         </View>
         <View style={{ flex: 1 }}>
           <Button title="Editar" onPress={handleEdit} />

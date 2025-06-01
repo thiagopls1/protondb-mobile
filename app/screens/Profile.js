@@ -14,25 +14,30 @@ import userModel from 'models/user';
 import { useEffect, useState } from 'react';
 import {} from 'react-native-web';
 import alert from 'infra/alert';
+import { useFocusEffect } from '@react-navigation/native';
+import React from 'react';
 
 export default function Profile({ navigation, route }) {
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
 
-  useEffect(() => {
-    async function getUserData() {
-      if (user) {
-        const data = await userModel.get(user.uid);
-        setUserData(data);
+  useFocusEffect(
+    React.useCallback(() => {
+      async function getUserData() {
+        if (user) {
+          const data = await userModel.get(user.uid);
+          setUserData(data);
+        }
       }
-    }
 
-    getUserData();
-  }, [user, route]);
+      getUserData();
+    }, [user])
+  );
 
   function handleNewDevice() {
     navigation.navigate('DeviceOptions', {
       type: 'new',
+      user_uid: user.uid,
     });
   }
 

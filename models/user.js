@@ -6,6 +6,7 @@ import {
   setDoc,
   getDoc,
   arrayRemove,
+  arrayUnion,
 } from 'firebase/firestore';
 import { ForbiddenError, NotFoundError } from 'infra/errors';
 import { db } from 'infra/firebase-connector.cjs';
@@ -78,7 +79,8 @@ async function deleteDevice(userUid, deviceIndex) {
     if (!userDoc.exists()) {
       throw new NotFoundError({
         message: 'Usuário não encontrado',
-        action: 'Entre em contato com o suporte',
+        action:
+          'Entre em contato com o suporte ou tente realizar a ação com outro usuário',
       });
     }
 
@@ -92,12 +94,59 @@ async function deleteDevice(userUid, deviceIndex) {
   }
 }
 
+async function createDevice(userUid, device) {
+  try {
+    const ref = doc(db, 'users', userUid);
+    const userDoc = await getDoc(ref);
+
+    if (!userDoc.exists()) {
+      throw new NotFoundError({
+        message: 'Usuário não encontrado',
+        action:
+          'Entre em contato com o suporte ou tente realizar a ação com outro usuário',
+      });
+    }
+
+    const userData = userDoc.data;
+    // Map keys to avoid object schema modification
+    await updateDoc(ref, {
+      ...userData,
+      devices: arrayUnion(device),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function updateDevice(userUid, device, deviceIndex) {
+  try {
+    const ref = doc(db, 'users', userUid);
+    const userDoc = await getDoc(ref);
+
+    if (!userDoc.exists()) {
+      throw new NotFoundError({
+        message: 'Usuário não encontrado',
+        action:
+          'Entre em contato com o suporte ou tente realizar a ação com outro usuário',
+      });
+    }
+
+    const userData = userDoc.data();
+    userData.devices[deviceIndex] = device;
+    await updateDoc(ref, userData);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const user = {
   get,
   create,
   update,
   delete: _delete,
   deleteDevice,
+  createDevice,
+  updateDevice,
 };
 
 export default user;
