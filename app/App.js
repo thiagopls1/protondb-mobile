@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Login from 'app/screens/Login';
 import HomeNavigation from 'app/navigation/HomeNavigation';
 import SignUp from 'app/screens/SignUp';
+import DeviceOptions from './screens/DeviceOptions';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
+          <Stack.Screen name="DeviceOptions" component={DeviceOptions} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

@@ -4,16 +4,32 @@ import {
   FlatList,
   StyleSheet,
   StatusBar,
+  ScrollView,
   Text,
   View,
 } from 'react-native';
 import { signOut, getAuth } from 'firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ScrollView } from 'react-native-web';
 import Device from 'app/components/Device';
+import userModel from 'models/user';
+import { useEffect, useState } from 'react';
+import {} from 'react-native-web';
 
 export default function Profile({ navigation }) {
   const { user, setUser } = useAuth();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    async function getUserData() {
+      if (user) {
+        const data = await userModel.get(user.uid);
+        setUserData(data);
+      }
+    }
+
+    getUserData();
+  }, [user]);
+
   const devicesMock = [
     {
       distro: 'Arch Linux',
@@ -35,7 +51,16 @@ export default function Profile({ navigation }) {
     },
   ];
 
+  function handleNewDevice() {
+    setUserData({
+      ...userData,
+      devices: [...userData.devices, devicesMock[1]],
+    });
+  }
+
   async function handleLogout() {
+    console.log(user.uid);
+    console.log(await userModel.get(user.uid));
     await signOut(getAuth());
     alert('Logout feito com sucesso');
   }
@@ -72,7 +97,7 @@ export default function Profile({ navigation }) {
         <View>
           <Text style={styles.textBold}>{user.email}</Text>
           <Text>Reports criados: 0</Text>
-          <Text>Dispositivos: {devicesMock.length}</Text>
+          <Text>Dispositivos: {userData?.devices.length || 0}</Text>
         </View>
       </View>
       <View style={styles.actionsContainer}>
@@ -82,11 +107,19 @@ export default function Profile({ navigation }) {
       <View style={styles.separator}></View>
       <View style={styles.devicesContainer}>
         <Text style={[styles.title, styles.textBold]}>Dispositivos</Text>
+        <View style={{ paddingBottom: 20 }}>
+          <Button title="+ Novo dispositivo" onPress={handleNewDevice} />
+        </View>
         <FlatList
-          data={devicesMock}
-          renderItem={(item) => <Device data={item.item} />}
+          data={userData?.devices}
+          renderItem={(item) => (
+            <Device
+              data={{ index: item.index, ...item.item, user_uid: user.uid }}
+              navigation={navigation}
+            />
+          )}
+          contentContainerStyle={{ marginBottom: 20 }}
         />
-        <Button title="+ Novo dispositivo" />
       </View>
     </View>
   );
@@ -94,7 +127,7 @@ export default function Profile({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.65,
     marginTop: StatusBar.currentHeight,
   },
   profileInfoContainer: {

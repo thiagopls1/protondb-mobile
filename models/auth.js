@@ -97,11 +97,11 @@ async function logout() {
   }
 }
 
-const user = {
+const _auth = {
   isCredentialsValid,
   authenticate,
   signUp,
   logout,
 };
 
-export default user;
+export default _auth;

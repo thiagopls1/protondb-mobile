@@ -5,9 +5,13 @@ const typesDict = {
   steam_deck: 'Steam Deck',
 };
 
-export default function Device({ data }) {
+export default function Device({ data, navigation }) {
+  function handleDevicePress() {
+    navigation.navigate('DeviceOptions', data);
+  }
+
   return (
-    <TouchableOpacity style={styles.container} onPress={() => {}}>
+    <TouchableOpacity style={styles.container} onPress={handleDevicePress}>
       <View>
         <Text style={styles.title}>{typesDict[data.type]}</Text>
         <View style={styles.infoContainer}>
@@ -26,7 +30,7 @@ export default function Device({ data }) {
 const styles = StyleSheet.create({
   container: {
     borderBottomWidth: 0.5,
-    marginBottom: 10,
+    marginBottom: 30,
   },
   infoContainer: {
     paddingVertical: 12,

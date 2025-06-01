@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { useState } from 'react';
 import auth from 'models/auth';
+import user from 'models/user';
+import { getAuth } from 'firebase/auth';
 
 export default function SignUp({ navigation }) {
   const [email, setEmail] = useState('');
@@ -33,9 +35,15 @@ export default function SignUp({ navigation }) {
 
   async function handleSignUp() {
     try {
-      await auth.signUp(email, password);
+      const newUserData = await auth.signUp(email, password);
+      await user.create({
+        uid: newUserData.user.uid,
+        username: newUserData.user.email,
+        devices: [],
+      });
       alertSignUpSuccess();
     } catch (error) {
+      console.log(error);
       alertSignUpFailure(error);
     }
   }
